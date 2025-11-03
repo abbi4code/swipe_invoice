@@ -3,7 +3,7 @@ import invoicesReducer from "@/features/invoicesSlice"
 import customersReducer from "@/features/customersSlice"
 import productsReducer from "@/features/productsSlice"
 
-const store = configureStore({
+export const store = configureStore({
     reducer: {
         invoices: invoicesReducer,
         products: productsReducer,
@@ -12,6 +12,6 @@ const store = configureStore({
 })
 
 export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = ReturnType<typeof store.dispatch>
+export type AppDispatch = typeof store.dispatch
 
 
