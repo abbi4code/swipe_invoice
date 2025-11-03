@@ -50,7 +50,6 @@ function App() {
         {/* --- Products Tab --- */}
         <TabsContent value="products">
           <h2 className="text-2xl font-semibold mb-4">Products</h2>
-          {/* We will create this component next */}
           {/* <ProductTable /> */}
           <p>Product table will go here.</p>
         </TabsContent>
