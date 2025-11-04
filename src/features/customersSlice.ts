@@ -1,7 +1,6 @@
 import {createSlice, type PayloadAction} from "@reduxjs/toolkit"
 
 import type {Customer} from "@/types"
-import type { RootState } from "@/app/store"
 
 interface CustomerState {
     customers: Customer[]
@@ -25,6 +24,6 @@ const customersSlice = createSlice({
 
 export const {setCustomers} = customersSlice.actions
 
-export const selectAllCustomers = (state: RootState) => state.customers.customers
+export const selectAllCustomers = (state: any) => state.customers.customers
 
 export default customersSlice.reducer

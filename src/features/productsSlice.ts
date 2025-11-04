@@ -1,5 +1,4 @@
 import {createSlice, type PayloadAction} from "@reduxjs/toolkit"
-import { type RootState } from "@/app/store"
 
 import type { Product } from "@/types"
  
@@ -8,7 +7,7 @@ interface ProductState {
     products: Product[]
 }
 
-const initialState: ProductState= {
+const initialState: ProductState = {
     products: []
 }
 
@@ -26,13 +25,12 @@ const productsSlice = createSlice({
             if(index !== -1){
                 state.products[index] = action.payload
             }
-
         }
     }
 })
 
 export const {setProducts,updateProduct} = productsSlice.actions
 
-export const selectAllProducts = (state: RootState) => state.products.products
+export const selectAllProducts = (state: any) => state.products.products
 
 export default productsSlice.reducer
