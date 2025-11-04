@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Invoice, Product, Customer } from '@/types';
+import { type Invoice, type Product, type Customer } from '@/types';
 
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${API_KEY}`;

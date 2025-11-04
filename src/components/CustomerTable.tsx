@@ -33,7 +33,7 @@ import {
               </TableCell>
             </TableRow>
           ) : (
-            customers.map((customer) => (
+            customers.map((customer: any) => (
               <TableRow key={customer.id}>
                 <TableCell className="font-medium">
                   {customer.customerName}

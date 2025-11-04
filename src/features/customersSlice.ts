@@ -1,6 +1,7 @@
 import {createSlice, type PayloadAction} from "@reduxjs/toolkit"
 
 import type {Customer} from "@/types"
+import { extractDataFromFile } from "./extractionThunk"
 
 interface CustomerState {
     customers: Customer[]
@@ -18,7 +19,13 @@ const customersSlice = createSlice({
             state.customers = action.payload
         }
 
-    }
+    },
+    extraReducers: (builder) => {
+        builder
+          .addCase(extractDataFromFile.fulfilled, (state, action) => {
+            state.customers = action.payload.customers;
+          });
+      },
     
 })
 
