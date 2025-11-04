@@ -33,6 +33,7 @@ function App() {
       toast.success("Data extracted successfully")
     }
     if(appStatus === 'failed' && appError){
+      console.log("error",appError)
       toast.error("Extraction Failed", {
         description: appError
       })
@@ -57,16 +58,16 @@ function App() {
   }
 
   return (
-    <div className="container mx-auto p-8">
+    <div className="container flex flex-col w-full mx-auto p-8">
       <Toaster position="top-right" richColors/>
       <header className="mb-8">
         <h1 className="text-4xl font-bold mb-4">Swipe Invoice Extractor</h1>
         
-        <div className="flex w-full max-w-sm items-center space-x-2 p-4 border rounded-lg">
+        <div className="flex w-full items-center space-x-2 p-4 border rounded-lg">
           <Label htmlFor="invoice-file" className="font-semibold">
             Upload File
           </Label>
-          <Input id="invoice-file" type="file" className="grow" onChange={handleFileChange} accept=".xlsx, .pdf, .png, .jpeg, .jpg" disabled={isLoading}/>
+          <Input id="invoice-file" type="file" className="grow max-w-56 cursor-pointer" onChange={handleFileChange} accept=".xlsx, .pdf, .png, .jpeg, .jpg" disabled={isLoading}/>
           <Button type="submit" onClick={handleExtractData} disabled={isLoading}> {isLoading ? "Extracting..." : "Extract Data"}</Button>
         </div>
       </header>

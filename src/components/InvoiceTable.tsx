@@ -1,4 +1,3 @@
-// src/components/InvoiceTable.tsx
 import {
     Table,
     TableBody,
@@ -9,11 +8,10 @@ import {
     TableRow,
   } from "@/components/ui/table"
   import { useAppSelector } from "@/app/hooks"
-  // Import our new "smart" selector
   import { selectProcessedInvoices } from "@/features/invoicesSlice"
   
   export const InvoiceTable = () => {
-    // This selector now returns the fully processed data!
+    // return fully processed data
     const invoices = useAppSelector(selectProcessedInvoices)
   
     return (

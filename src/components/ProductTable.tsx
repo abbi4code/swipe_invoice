@@ -1,4 +1,3 @@
-// src/components/ProductTable.tsx
 import {
     Table,
     TableBody,
@@ -10,9 +9,10 @@ import {
   } from "@/components/ui/table"
 import { useAppSelector } from "@/app/hooks"
 import { selectAllProducts } from "@/features/productsSlice"
+import { EditProductDialog } from "./EditProductDialog"
 
 export const ProductTable = () => {
-    // Read data directly from the Redux store
+    // read data directly from the redux store
     const products = useAppSelector(selectAllProducts)
 
     return (
@@ -25,17 +25,18 @@ export const ProductTable = () => {
             <TableHead>Unit Price</TableHead>
             <TableHead>Tax</TableHead>
             <TableHead className="text-right">Price with Tax</TableHead>
+            <TableHead className="text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {products.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={5} className="text-center">
+              <TableCell colSpan={6} className="text-center">
                 No products found.
               </TableCell>
             </TableRow>
           ) : (
-            products.map((product) => (
+            products.map((product: any) => (
               <TableRow key={product.id}>
                 <TableCell className="font-medium">{product.name}</TableCell>
                 <TableCell>{product.quantity ?? "N/A"}</TableCell>
@@ -43,6 +44,9 @@ export const ProductTable = () => {
                 <TableCell>{product.tax ?? "N/A"}</TableCell>
                 <TableCell className="text-right">
                   {product.priceWithTax ?? "N/A"}
+                </TableCell>
+                <TableCell className="text-right">
+                  <EditProductDialog product={product}/>
                 </TableCell>
               </TableRow>
             ))
