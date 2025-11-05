@@ -16,7 +16,7 @@ import { CustomerTable } from "@/components/CustomerTable"
 
 import { useAppDispatch, useAppSelector } from "@/app/hooks"
 import { extractDataFromFile } from "./features/extractionThunk"
-import { selectAppStatus, selectAppError } from "@/features/appSlice"
+import { selectAppStatus, selectAppError, clearAllData } from "@/features/appSlice"
 
 
 function App() {
@@ -57,19 +57,33 @@ function App() {
     }
   }
 
+  const handleClearData = () => {
+    dispatch(clearAllData())
+    toast.info("Data cleared", {
+      description: "All tables have been reset.",
+    });
+  }
+
   return (
     <div className="container flex flex-col w-full mx-auto p-8">
       <Toaster position="top-right" richColors/>
-      <header className="mb-8">
-        <h1 className="text-4xl font-bold mb-4">Swipe Invoice Extractor</h1>
+      <header className="mb-8 flex flex-col items-center justify-center">
+        <h1 className="text-4xl font-bold mb-4 justify-start w-full">Swipe Invoice Extractor</h1>
         
-        <div className="flex w-full items-center space-x-2 p-4 border rounded-lg">
-          <Label htmlFor="invoice-file" className="font-semibold">
+        <div className="flex items-center max-w-5xl space-x-2 p-4 border rounded-lg justify-around">
+          <div className="flex gap-3.5">
+            <Label htmlFor="invoice-file" className="font-semibold">
             Upload File
           </Label>
           <Input id="invoice-file" type="file" className="grow max-w-56 cursor-pointer" onChange={handleFileChange} accept=".xlsx, .pdf, .png, .jpeg, .jpg" disabled={isLoading}/>
+          </div>
           <Button type="submit" onClick={handleExtractData} disabled={isLoading}> {isLoading ? "Extracting..." : "Extract Data"}</Button>
         </div>
+        <div className="mt-4">
+        <Button variant="outline" size="sm" onClick={handleClearData}>
+          Clear All Data
+        </Button>
+      </div>
       </header>
 
       <Tabs defaultValue="invoices" className="w-full">

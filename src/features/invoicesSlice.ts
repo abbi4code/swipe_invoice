@@ -6,6 +6,7 @@ import { createSelector } from "@reduxjs/toolkit"
 import { selectAllCustomers } from "./customersSlice"
 import { selectAllProducts } from "./productsSlice"
 import { extractDataFromFile } from "./extractionThunk"
+import { clearAllData } from "./appSlice"
 
 interface InvoiceState {
     invoices: Invoice[]
@@ -25,7 +26,10 @@ const invoicesSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(extractDataFromFile.fulfilled, (state,action) => {
-            state.invoices = action.payload.invoices
+            state.invoices.push(...action.payload.invoices)
+        })
+        .addCase(clearAllData, (state) => {
+            state.invoices = []
         })
     }
 })

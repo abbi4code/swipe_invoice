@@ -1,6 +1,7 @@
 import {createSlice, type PayloadAction} from "@reduxjs/toolkit"
 import type { Product } from "@/types"
 import { extractDataFromFile } from "./extractionThunk"
+import { clearAllData } from "./appSlice"
  
 
 interface ProductState {
@@ -9,6 +10,17 @@ interface ProductState {
 
 const initialState: ProductState = {
     products: []
+}
+
+const addOrUpdateProducts = (state: ProductState, newProducts: Product[]) => {
+    newProducts.forEach((newProduct) => {
+        const index = state.products.findIndex((p) => p.id === newProduct.id);
+        if(index !== -1){
+            state.products[index] = newProduct;
+        } else {
+            state.products.push(newProduct)
+        }
+    })
 }
 
 const productsSlice = createSlice({
@@ -30,8 +42,11 @@ const productsSlice = createSlice({
     extraReducers: (builder) => {
         builder
       .addCase(extractDataFromFile.fulfilled, (state, action) => {
-        state.products = action.payload.products;
-      });
+        addOrUpdateProducts(state, action.payload.products)
+      })
+      .addCase(clearAllData, (state) => {
+        state.products = []
+      })
     }
 })
 

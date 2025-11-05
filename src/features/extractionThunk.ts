@@ -39,7 +39,7 @@ export const extractDataFromFile = createAsyncThunk<ExtractionResponse, ExtractD
             }
 
             // call ai API
-            const response = await callModalApi(fileData, mimeType, isExcel)
+            const response = await callModalApi(fileData, mimeType, isExcel, fileType)
             console.log("response from AI after processed", response)
 
             // Check for valid response structure

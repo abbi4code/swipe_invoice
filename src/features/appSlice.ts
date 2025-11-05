@@ -17,7 +17,13 @@ const initialState: AppState = {
 const appSlice = createSlice({
     name: 'app',
     initialState,
-    reducers: {},
+    reducers: {
+        clearAllData: (state) => {
+            state.error = null
+            state.status = 'idle'
+
+        }
+    },
     //! will add extrareducers later
     extraReducers: (builder) => {
         builder.addCase(extractDataFromFile.pending, (state) => {
@@ -34,6 +40,8 @@ const appSlice = createSlice({
         })
     }
 })
+
+export const {clearAllData} = appSlice.actions
 
 // selectors
 export const selectAppStatus = (state: any) => state.app.status

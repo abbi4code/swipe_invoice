@@ -16,6 +16,7 @@ export interface Customer {
   }
   
   export interface Invoice {
+    id: string,
     serialNumber: string;
     customerId: string;
     productId: string;  

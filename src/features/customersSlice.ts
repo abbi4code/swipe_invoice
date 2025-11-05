@@ -2,6 +2,7 @@ import {createSlice, type PayloadAction} from "@reduxjs/toolkit"
 
 import type {Customer} from "@/types"
 import { extractDataFromFile } from "./extractionThunk"
+import { clearAllData } from "./appSlice"
 
 interface CustomerState {
     customers: Customer[]
@@ -9,6 +10,18 @@ interface CustomerState {
 
 const initialState: CustomerState = {
     customers: []
+}
+
+const addOrUpdateCustomers = (state: CustomerState, newCustomers: Customer[]) => {
+    newCustomers.forEach((newCustomer) => {
+        const index = state.customers.findIndex((c) => c.id === newCustomer.id);
+        if(index !== -1){
+            state.customers[index] = newCustomer;
+        }else{
+            state.customers.push(newCustomer)
+        }
+
+    })
 }
 
 const customersSlice = createSlice({
@@ -23,8 +36,11 @@ const customersSlice = createSlice({
     extraReducers: (builder) => {
         builder
           .addCase(extractDataFromFile.fulfilled, (state, action) => {
-            state.customers = action.payload.customers;
-          });
+            addOrUpdateCustomers(state, action.payload.customers)
+          })
+          .addCase(clearAllData, (state) => {
+            state.customers = []
+          })
       },
     
 })

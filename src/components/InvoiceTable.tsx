@@ -26,6 +26,7 @@ import {
         <TableCaption>A list of your extracted invoices.</TableCaption>
         <TableHeader>
           <TableRow>
+            <TableHead>Id</TableHead>
             <TableHead>Serial No.</TableHead>
             <TableHead>Customer Name</TableHead>
             <TableHead>Product Name</TableHead>
@@ -38,16 +39,17 @@ import {
         <TableBody>
           {invoices.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={7} className="text-center">
+              <TableCell colSpan={8} className="text-center">
                 No data extracted yet. Please upload a file.
               </TableCell>
             </TableRow>
           ) : (
             invoices.map((invoice: any) => (
-              <TableRow key={invoice.serialNumber}>
+              <TableRow key={invoice.id}>
                 <TableCell className="font-medium">
-                  {renderCell(invoice.serialNumber)}
+                  {renderCell(invoice.id)}
                 </TableCell>
+                <TableCell>{renderCell(invoice.serialNumber)}</TableCell>
                 <TableCell>{renderCell(invoice.customerName)}</TableCell>
                 <TableCell>{renderCell(invoice.productName)}</TableCell>
                 <TableCell>{renderCell(invoice.qty)}</TableCell>
