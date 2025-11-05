@@ -11,6 +11,14 @@ import { useAppSelector } from "@/app/hooks"
 import { selectAllProducts } from "@/features/productsSlice"
 import { EditProductDialog } from "./EditProductDialog"
 
+const renderCell = (data: string | number | null | undefined) => {
+  if (data === null || data === undefined) {
+    return <span className="text-red-500 font-semibold">Missing</span>;
+  }
+  return data;
+};
+
+
 export const ProductTable = () => {
     // read data directly from the redux store
     const products = useAppSelector(selectAllProducts)
@@ -38,12 +46,16 @@ export const ProductTable = () => {
           ) : (
             products.map((product: any) => (
               <TableRow key={product.id}>
-                <TableCell className="font-medium">{product.name}</TableCell>
+                {/* <TableCell className="font-medium">{product.name}</TableCell>
                 <TableCell>{product.quantity ?? "N/A"}</TableCell>
                 <TableCell>{product.unitPrice ?? "N/A"}</TableCell>
-                <TableCell>{product.tax ?? "N/A"}</TableCell>
+                <TableCell>{product.tax ?? "N/A"}</TableCell> */}
+                <TableCell className="font-medium">{renderCell(product.name)}</TableCell>
+                <TableCell>{renderCell(product.quantity)}</TableCell>
+                <TableCell>{renderCell(product.unitPrice)}</TableCell>
+                <TableCell>{renderCell(product.tax)}</TableCell>
                 <TableCell className="text-right">
-                  {product.priceWithTax ?? "N/A"}
+                {renderCell(product.priceWithTax)}
                 </TableCell>
                 <TableCell className="text-right">
                   <EditProductDialog product={product}/>

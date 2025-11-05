@@ -16,14 +16,16 @@ export interface ExtractionResponse {
 
 /**
  * sends file content and prompt to ai api
- * @param fileData: base64 (for image/pdf) or JSON (for excel) string
- * @param mimedata: mime type of the file (e.g., "image/png", "application/pdf", "text/plain" for Excel JSON)
+ * @param fileData: base64-encoded string (for PDFs/images) or JSON string (for Excel)
+ * @param mimeType: mime type of the file (e.g., "image/png", "application/pdf", "text/plain")
+ * @param isTextData: true if fileData is text (Excel JSON), false if it's base64 binary (PDF/image)
  * @returns parsed JSON object { invoices, products, customers }
  */
 
 export const callModalApi = async (
     fileData: string,
-    mimeType: string
+    mimeType: string,
+    isTextData: boolean = false
 ): Promise<ExtractionResponse> => {
 
     const prompt = `
@@ -75,15 +77,21 @@ export const callModalApi = async (
     \`\`\`
   `;
 
+  const parts = isTextData
+    ? [
+        // For Excel: send as text content
+        { text: `Here is the Excel data in JSON format:\n\n${fileData}\n\n${prompt}` }
+      ]
+    : [
+        // For PDF/Images: send as binary inlineData
+        { inlineData: { mimeType, data: fileData } },
+        { text: prompt }
+      ];
+
   const requestBody = {
     contents: [
         {
-            parts: [
-                // file data
-                {inlineData: {mimeType, data: fileData}},
-                // prompt
-                {text: prompt},
-            ]
+            parts: parts
         }
     ],
     // ensure we get a JSON res
@@ -96,8 +104,10 @@ export const callModalApi = async (
     const response = await axios.post(API_URL, requestBody, {
         headers: {'Content-Type': 'application/json'}
     })
+    console.log("Immediate Response from AI",response)
 
     const jsonString = response.data.candidates[0].content.parts[0].text;
+    console.log("AI jsonstring",jsonString)
 
     const parsedData: ExtractionResponse = JSON.parse(jsonString);
 

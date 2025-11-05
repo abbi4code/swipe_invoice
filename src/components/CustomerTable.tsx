@@ -10,6 +10,13 @@ import {
   import { useAppSelector } from "@/app/hooks"
   import { selectAllCustomers } from "@/features/customersSlice"
   
+  const renderCell = (data: string | number | null | undefined) => {
+    if (data === null || data === undefined) {
+      return <span className="text-red-500 font-semibold">Missing</span>;
+    }
+    return data;
+  };
+
   export const CustomerTable = () => {
     // Read data directly from the Redux store
     const customers = useAppSelector(selectAllCustomers)
@@ -35,11 +42,11 @@ import {
             customers.map((customer: any) => (
               <TableRow key={customer.id}>
                 <TableCell className="font-medium">
-                  {customer.customerName}
+                  {renderCell(customer.customerName)}
                 </TableCell>
-                <TableCell>{customer.phoneNumber ?? "N/A"}</TableCell>
+                <TableCell>{renderCell(customer.phoneNumber)}</TableCell>
                 <TableCell className="text-right">
-                  {customer.totalPurchaseAmount ?? "N/A"}
+                  {renderCell(customer.totalPurchaseAmount)}
                 </TableCell>
               </TableRow>
             ))

@@ -10,6 +10,13 @@ import {
   import { useAppSelector } from "@/app/hooks"
   import { selectProcessedInvoices } from "@/features/invoicesSlice"
   
+  const renderCell = (data: string | number | null | undefined) => {
+    if (data === null || data === undefined) {
+      return <span className="text-red-500 font-semibold">Missing</span>;
+    }
+    return data;
+  };
+
   export const InvoiceTable = () => {
     // return fully processed data
     const invoices = useAppSelector(selectProcessedInvoices)
@@ -39,15 +46,15 @@ import {
             invoices.map((invoice: any) => (
               <TableRow key={invoice.serialNumber}>
                 <TableCell className="font-medium">
-                  {invoice.serialNumber}
+                  {renderCell(invoice.serialNumber)}
                 </TableCell>
-                <TableCell>{invoice.customerName}</TableCell>
-                <TableCell>{invoice.productName}</TableCell>
-                <TableCell>{invoice.qty ?? "N/A"}</TableCell>
-                <TableCell>{invoice.tax ?? "N/A"}</TableCell>
-                <TableCell>{invoice.date ?? "N/A"}</TableCell>
+                <TableCell>{renderCell(invoice.customerName)}</TableCell>
+                <TableCell>{renderCell(invoice.productName)}</TableCell>
+                <TableCell>{renderCell(invoice.qty)}</TableCell>
+                <TableCell>{renderCell(invoice.tax)}</TableCell>
+                <TableCell>{renderCell(invoice.date)}</TableCell>
                 <TableCell className="text-right">
-                  {invoice.totalAmount ?? "N/A"}
+                  {renderCell(invoice.totalAmount)}
                 </TableCell>
               </TableRow>
             ))

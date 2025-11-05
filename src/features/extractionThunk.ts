@@ -16,6 +16,7 @@ export const extractDataFromFile = createAsyncThunk<ExtractionResponse, ExtractD
         try {
             let fileData: string;
             let mimeType: string;
+            let isExcel = false;
 
             // process file based on its type
             const fileType = file.type;
@@ -25,20 +26,35 @@ export const extractDataFromFile = createAsyncThunk<ExtractionResponse, ExtractD
                 mimeType = file.type
             }else if (
                 fileType.includes('spreadsheetml') ||
-                fileType.includes('excel')
+                fileType.includes('excel') ||
+                file.name.endsWith('.xlsx') ||
+                file.name.endsWith('.xls')
             ) {
+                // For Excel, convert to JSON text (Gemini doesn't support Excel as inlineData)
                 fileData = await readExcelFileAsJson(file);
-                // We send Excel JSON as plain text
-                mimeType = 'text/plain'; 
+                mimeType = 'text/plain';
+                isExcel = true;
             } else {
                 return rejectWithValue('Unsupported file format.');
             }
 
             // call ai API
-            const response = await callModalApi(fileData, mimeType)
+            const response = await callModalApi(fileData, mimeType, isExcel)
+            console.log("response from AI after processed", response)
 
+            // Check for valid response structure
             if( !response.invoices || !response.products || !response.customers) {
                 return rejectWithValue('Invalid data structure returned from AI.')
+            }
+            // check if the AI returned all empty arrays (wrong file content)
+            if (
+                response.invoices.length === 0 &&
+                response.products.length === 0 &&
+                response.customers.length === 0
+            ) {
+                return rejectWithValue(
+                    "No relevant data found. The file might not be an invoice, bill, or transaction sheet."
+                );
             }
 
             return response
