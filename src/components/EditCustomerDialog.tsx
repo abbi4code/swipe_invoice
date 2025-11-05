@@ -27,7 +27,6 @@ export const EditCustomerDialog = ({ customer }: EditCustomerDialogProps) => {
 
     const [customerName, setCustomerName] = useState(customer.customerName)
     const [phoneNumber, setPhoneNumber] = useState(customer.phoneNumber ?? '')
-    const [totalPurchaseAmount, setTotalPurchaseAmount] = useState(customer.totalPurchaseAmount ?? 0)
     const [email, setEmail] = useState(customer.email ?? '')
     const [companyName, setCompanyName] = useState(customer.companyName ?? '')
     const [address, setAddress] = useState(customer.address ?? '')
@@ -44,7 +43,6 @@ export const EditCustomerDialog = ({ customer }: EditCustomerDialogProps) => {
             ...customer, 
             customerName,
             phoneNumber: phoneNumber || null,
-            totalPurchaseAmount,
             email: email || null,
             companyName: companyName || null,
             address: address || null
@@ -61,14 +59,13 @@ export const EditCustomerDialog = ({ customer }: EditCustomerDialogProps) => {
         </DialogTrigger>
         <DialogContent className="min-w-5xl">
           <DialogHeader>
-            <DialogTitle>Edit Customer</DialogTitle>
+            <DialogTitle>Edit Customer Information</DialogTitle>
             <DialogDescription>
-              Make changes to customer information. Click save when you're done.
+              Edit customer details. Total purchase amount is calculated from invoices.
             </DialogDescription>
           </DialogHeader>
           
           <div className="grid gap-4 py-4 max-h-[60vh] overflow-y-auto">
-            {/* Customer Name */}
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="customerName" className="text-right">
                 Name
@@ -81,7 +78,6 @@ export const EditCustomerDialog = ({ customer }: EditCustomerDialogProps) => {
               />
             </div>
 
-            {/* Phone Number */}
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="phoneNumber" className="text-right">
                 Phone
@@ -95,26 +91,10 @@ export const EditCustomerDialog = ({ customer }: EditCustomerDialogProps) => {
               />
             </div>
 
-            {/* Total Purchase Amount */}
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="totalPurchaseAmount" className="text-right">
-                Total Purchase
-              </Label>
-              <Input
-                id="totalPurchaseAmount"
-                type="number"
-                value={totalPurchaseAmount}
-                onChange={(e) => setTotalPurchaseAmount(Number(e.target.value))}
-                className="col-span-3"
-              />
-            </div>
-
-            {/* 🌟 BONUS FIELDS */}
             <div className="col-span-4 border-t pt-2 mt-2">
               <p className="text-sm text-muted-foreground mb-2">Additional Details</p>
             </div>
 
-            {/* Email */}
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="email" className="text-right">
                 Email
@@ -129,7 +109,6 @@ export const EditCustomerDialog = ({ customer }: EditCustomerDialogProps) => {
               />
             </div>
 
-            {/* Company Name */}
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="companyName" className="text-right">
                 Company
@@ -143,7 +122,6 @@ export const EditCustomerDialog = ({ customer }: EditCustomerDialogProps) => {
               />
             </div>
 
-            {/* Address */}
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="address" className="text-right">
                 Address

@@ -26,33 +26,25 @@ export const EditProductDialog = ({ product }: EditProductDialogProps) => {
     const dispatch = useAppDispatch()
 
     const [name, setName] = useState(product.name)
-    const [quantity, setQuantity] = useState(product.quantity ?? 0)
     const [unitPrice, setUnitPrice] = useState(product.unitPrice ?? 0)
-    const [tax, setTax] = useState(product.tax ?? 0)
     const [discount, setDiscount] = useState(product.discount ?? 0)
     const [category, setCategory] = useState(product.category ?? '')
     const [sku, setSku] = useState(product.sku ?? '')
     const [description, setDescription] = useState(product.description ?? '')
 
     const handleSaveChanges = () => {
-        if(!name || unitPrice < 0){
+        if(!name){
             toast.error("Invalid input", {
-                description: "Please check your product name and price.",
+                description: "Product name is required.",
               })
             return
         }
 
-        // Calculate priceWithTax
-        const calculatedPriceWithTax = (unitPrice * quantity) + tax - discount
-
         dispatch(updateProduct({
             ...product, 
             name,
-            quantity,
             unitPrice,
-            tax,
             discount: discount || null,
-            priceWithTax: calculatedPriceWithTax,
             category: category || null,
             sku: sku || null,
             description: description || null
@@ -69,9 +61,9 @@ export const EditProductDialog = ({ product }: EditProductDialogProps) => {
         </DialogTrigger>
         <DialogContent className="min-w-5xl">
           <DialogHeader>
-            <DialogTitle>Edit Product</DialogTitle>
+            <DialogTitle>Edit Product Metadata</DialogTitle>
             <DialogDescription>
-              Make changes to your product. Click save when you're done.
+              Edit product details. Quantity and totals are calculated from invoices.
             </DialogDescription>
           </DialogHeader>
           
@@ -89,19 +81,6 @@ export const EditProductDialog = ({ product }: EditProductDialogProps) => {
             </div>
 
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="quantity" className="text-right">
-                Quantity
-              </Label>
-              <Input
-                id="quantity"
-                type="number"
-                value={quantity}
-                onChange={(e) => setQuantity(Number(e.target.value))}
-                className="col-span-3"
-              />
-            </div>
-
-            <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="unitPrice" className="text-right">
                 Unit Price
               </Label>
@@ -110,19 +89,6 @@ export const EditProductDialog = ({ product }: EditProductDialogProps) => {
                 type="number"
                 value={unitPrice}
                 onChange={(e) => setUnitPrice(Number(e.target.value))}
-                className="col-span-3"
-              />
-            </div>
-
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="tax" className="text-right">
-                Tax
-              </Label>
-              <Input
-                id="tax"
-                type="number"
-                value={tax}
-                onChange={(e) => setTax(Number(e.target.value))}
                 className="col-span-3"
               />
             </div>
@@ -144,7 +110,8 @@ export const EditProductDialog = ({ product }: EditProductDialogProps) => {
             <div className="col-span-4 border-t pt-2 mt-2">
               <p className="text-sm text-muted-foreground mb-2">Additional Details</p>
             </div>
-            <div className="grid grid-cols-4 items-center gap-6">
+            
+            <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="category" className="text-right">
                 Category
               </Label>
@@ -170,7 +137,7 @@ export const EditProductDialog = ({ product }: EditProductDialogProps) => {
               />
             </div>
 
-            <div className="grid grid-cols-4 items-center gap-10">
+            <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="description" className="text-right">
                 Description
               </Label>

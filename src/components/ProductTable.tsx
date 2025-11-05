@@ -8,7 +8,7 @@ import {
     TableRow,
   } from "@/components/ui/table"
 import { useAppSelector } from "@/app/hooks"
-import { selectAllProducts } from "@/features/productsSlice"
+import { selectProductsWithCalculatedTotals } from "@/features/productsSlice"
 import { EditProductDialog } from "./EditProductDialog"
 
 const renderCell = (data: string | number | null | undefined) => {
@@ -20,8 +20,8 @@ const renderCell = (data: string | number | null | undefined) => {
 
 
 export const ProductTable = () => {
-    // read data directly from the redux store
-    const products = useAppSelector(selectAllProducts)
+    // dynamic selector to recalculates totals from invoices
+    const products = useAppSelector(selectProductsWithCalculatedTotals)
 
     return (
       <Table>

@@ -8,7 +8,7 @@ import {
     TableRow,
   } from "@/components/ui/table"
   import { useAppSelector } from "@/app/hooks"
-  import { selectAllCustomers } from "@/features/customersSlice"
+  import { selectCustomersWithCalculatedTotals } from "@/features/customersSlice"
   import { EditCustomerDialog } from "./EditCustomerDialog"
   
   const renderCell = (data: string | number | null | undefined) => {
@@ -19,8 +19,8 @@ import {
   };
 
   export const CustomerTable = () => {
-    // Read data directly from the Redux store
-    const customers = useAppSelector(selectAllCustomers)
+    // dynamic selector to recalculates totals from invoices
+    const customers = useAppSelector(selectCustomersWithCalculatedTotals)
   
     return (
       <Table>

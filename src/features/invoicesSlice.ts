@@ -7,6 +7,7 @@ import { selectAllCustomers } from "./customersSlice"
 import { selectAllProducts } from "./productsSlice"
 import { extractDataFromFile } from "./extractionThunk"
 import { clearAllData } from "./appSlice"
+import { updateProduct } from "./productsSlice"
 
 interface InvoiceState {
     invoices: Invoice[]
@@ -25,11 +26,26 @@ const invoicesSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
-        builder.addCase(extractDataFromFile.fulfilled, (state,action) => {
+        builder
+        .addCase(extractDataFromFile.fulfilled, (state,action) => {
             state.invoices.push(...action.payload.invoices)
         })
         .addCase(clearAllData, (state) => {
             state.invoices = []
+        })
+        // when product is updated, recalculate related invoices
+        .addCase(updateProduct, (state, action) => {
+            const updatedProduct = action.payload
+            // update all invoices that use this product
+            state.invoices.forEach((invoice) => {
+                if (invoice.productId === updatedProduct.id) {
+                    // rcalculate totalAmount based on new unitPrice
+                    const qty = invoice.qty || 0
+                    const unitPrice = updatedProduct.unitPrice || 0
+                    const tax = invoice.tax || 0
+                    invoice.totalAmount = (qty * unitPrice) + tax
+                }
+            })
         })
     }
 })

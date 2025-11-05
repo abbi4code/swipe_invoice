@@ -1,4 +1,4 @@
-import {createSlice, type PayloadAction} from "@reduxjs/toolkit"
+import {createSlice, type PayloadAction, createSelector} from "@reduxjs/toolkit"
 
 import type {Customer} from "@/types"
 import { extractDataFromFile } from "./extractionThunk"
@@ -54,5 +54,24 @@ const customersSlice = createSlice({
 export const {setCustomers, updateCustomer} = customersSlice.actions
 
 export const selectAllCustomers = (state: any) => state.customers.customers
+
+// recalculates customer totals from invoices
+export const selectCustomersWithCalculatedTotals = createSelector(
+    [selectAllCustomers, (state: any) => state.invoices.invoices],
+    (customers, invoices) => {
+        return customers.map((customer: Customer) => {
+            // find all invoices for this customer
+            const customerInvoices = invoices.filter((inv: any) => inv.customerId === customer.id)
+            
+            // calculate total purchase amount from invoices
+            const totalPurchaseAmount = customerInvoices.reduce((sum: number, inv: any) => sum + (inv.totalAmount || 0), 0)
+            
+            return {
+                ...customer,
+                totalPurchaseAmount: totalPurchaseAmount || customer.totalPurchaseAmount
+            }
+        })
+    }
+)
 
 export default customersSlice.reducer
