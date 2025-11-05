@@ -30,6 +30,12 @@ const customersSlice = createSlice({
     reducers: {
         setCustomers: (state,action: PayloadAction<Customer[]>) =>{
             state.customers = action.payload
+        },
+        updateCustomer: (state, action: PayloadAction<Customer>) => {
+            const index = state.customers.findIndex(c => c.id === action.payload.id)
+            if(index !== -1){
+                state.customers[index] = action.payload
+            }
         }
 
     },
@@ -45,7 +51,7 @@ const customersSlice = createSlice({
     
 })
 
-export const {setCustomers} = customersSlice.actions
+export const {setCustomers, updateCustomer} = customersSlice.actions
 
 export const selectAllCustomers = (state: any) => state.customers.customers
 

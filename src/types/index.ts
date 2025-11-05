@@ -5,7 +5,10 @@ export interface Product {
     unitPrice: number | null, 
     tax: number | null, 
     priceWithTax: number | null, 
-    discount?: number | null 
+    discount?: number | null,
+    category?: string | null,
+    sku?: string | null,
+    description?: string | null
 }
 
 export interface Customer {
@@ -13,6 +16,9 @@ export interface Customer {
     customerName: string;
     phoneNumber: string | null;
     totalPurchaseAmount: number | null;
+    email?: string | null;
+    companyName?: string | null;
+    address?: string | null;
   }
   
   export interface Invoice {

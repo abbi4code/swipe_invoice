@@ -9,6 +9,7 @@ import {
   } from "@/components/ui/table"
   import { useAppSelector } from "@/app/hooks"
   import { selectAllCustomers } from "@/features/customersSlice"
+  import { EditCustomerDialog } from "./EditCustomerDialog"
   
   const renderCell = (data: string | number | null | undefined) => {
     if (data === null || data === undefined) {
@@ -29,12 +30,13 @@ import {
             <TableHead>ID (Customer Name)</TableHead>
             <TableHead>Phone Number</TableHead>
             <TableHead className="text-right">Total Purchase Amount</TableHead>
+            <TableHead className="text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {customers.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={3} className="text-center">
+              <TableCell colSpan={4} className="text-center">
                 No customers found.
               </TableCell>
             </TableRow>
@@ -47,6 +49,9 @@ import {
                 <TableCell>{renderCell(customer.phoneNumber)}</TableCell>
                 <TableCell className="text-right">
                   {renderCell(customer.totalPurchaseAmount)}
+                </TableCell>
+                <TableCell className="text-right">
+                  <EditCustomerDialog customer={customer}/>
                 </TableCell>
               </TableRow>
             ))

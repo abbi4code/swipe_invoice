@@ -61,7 +61,11 @@ Your task is to analyze this list and transform it into three separate, clean JS
       "quantity": "number or null (SUM of all qty for this product)",
       "unitPrice": "number or null",
       "tax": "number or null (SUM of all tax for this product)",
-      "priceWithTax": "number or null (SUM of all totalAmount for this product)"
+      "priceWithTax": "number or null (SUM of all totalAmount for this product)",
+      "discount": "number or null (optional)",
+      "category": "string or null (optional, e.g., Electronics, Food)",
+      "sku": "string or null (optional, stock keeping unit)",
+      "description": "string or null (optional)"
     }
   ],
   "customers": [
@@ -69,7 +73,10 @@ Your task is to analyze this list and transform it into three separate, clean JS
       "id": "string (customer name)",
       "customerName": "string",
       "phoneNumber": "string or null",
-      "totalPurchaseAmount": "number or null (SUM of all totalAmount for this customer)"
+      "totalPurchaseAmount": "number or null (SUM of all totalAmount for this customer)",
+      "email": "string or null (optional)",
+      "companyName": "string or null (optional)",
+      "address": "string or null (optional)"
     }
   ]
 }
@@ -115,7 +122,11 @@ Your task is to extract the data and transform it into three separate JSON array
       "quantity": "number or null",
       "unitPrice": "number or null",
       "tax": "number or null",
-      "priceWithTax": "number or null (line item total)"
+      "priceWithTax": "number or null (line item total)",
+      "discount": "number or null (optional)",
+      "category": "string or null (optional, e.g., Electronics, Food)",
+      "sku": "string or null (optional, stock keeping unit)",
+      "description": "string or null (optional)"
     }
   ],
   "customers": [
@@ -123,7 +134,10 @@ Your task is to extract the data and transform it into three separate JSON array
       "id": "string (customer name)",
       "customerName": "string",
       "phoneNumber": "string or null",
-      "totalPurchaseAmount": "number or null (invoice grand total)"
+      "totalPurchaseAmount": "number or null (invoice grand total)",
+      "email": "string or null (optional)",
+      "companyName": "string or null (optional)",
+      "address": "string or null (optional)"
     }
   ]
 }
