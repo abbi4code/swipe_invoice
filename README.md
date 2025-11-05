@@ -1,7 +1,5 @@
-# 📄 Swipe Invoice Extractor
-
-An intelligent, AI-powered invoice data extraction application that processes multiple file formats (PDFs, Images, Excel) and automatically extracts structured invoice, product, and customer information using Google's Gemini AI.
----
+# Swipe Invoice Extractor
+**An intelligent, AI-powered invoice data extraction application that processes multiple file formats (PDFs, Images, Excel) and automatically extracts structured invoice, product, and customer information using Google's Gemini AI.**
 
 ## Features
 
@@ -18,21 +16,6 @@ An intelligent, AI-powered invoice data extraction application that processes mu
 - **Missing Data Highlighting**: Visual indicators (red "Missing" badges) for null/undefined values
 - **Duplicate Handling**: Automatic unique ID generation prevents React key conflicts
 - **Edit Capabilities**: Modify product and customer metadata with auto-recalculation
-
----
-
-## 🏗️ Architecture
-
-### Technology Stack
-
-```
-Frontend Framework:    React 19.1.1 + TypeScript 5.9.3
-State Management:      Redux Toolkit 2.9.2
-Styling:              TailwindCSS 4.1.16 + Radix UI
-AI Integration:       Google Gemini 2.5 Flash API
-File Processing:      XLSX library + FileReader API
-Build Tool:           Vite 7.1.7
-```
 
 ---
 
@@ -250,7 +233,7 @@ npm run build
 
 ---
 
-## 🎯 Key Features Explained
+## Key Features Explained
 
 ### Real-Time Tab Synchronization
 
