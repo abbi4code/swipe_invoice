@@ -10,7 +10,7 @@ https://github.com/user-attachments/assets/10665148-4195-407f-82a4-dd03508c0129
  <img width="1368" height="739" alt="Screenshot 2025-11-05 at 11 16 38 PM" src="https://github.com/user-attachments/assets/fa0d5f3a-2205-4505-b05d-9a0553de8a53" />
 <img width="1352" height="746" alt="Screenshot 2025-11-05 at 11 23 40 PM" src="https://github.com/user-attachments/assets/dfe5db37-5e5f-48a3-a99b-b31c042b1b26" />
 
-- **INVALID_FILES with irrelevant file** : Handled several other test case discuss below
+- **Valid Format with irrelevant data** (Handled several other test case discuss below)
 
 <img width="990" height="605" alt="Screenshot 2025-11-05 at 11 18 42 PM" src="https://github.com/user-attachments/assets/ef6596c6-764e-40bb-8c9c-b1433ea5b806" />
 
